@@ -1,5 +1,6 @@
 #appset-karmada.yaml
 apiVersion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: karmada-propagation
@@ -8,8 +9,8 @@ spec:
   generators:
     - list:
         elements:
-          - path: propagation-policies
-          - path: workloads
+          - path: deployment-workloads/propagation-policies
+          - path: deployment-workloads/workloads
   template:
     metadata:
       name: '{{path}}'
@@ -20,9 +21,10 @@ spec:
         targetRevision: main
         path: '{{path}}'
       destination:
-        server: 'https://kubernetes.default.svc'   # Host Cluster
+        server: 'https://kubernetes.default.svc'
         namespace: default
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+
