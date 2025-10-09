@@ -8,7 +8,7 @@ spec:
   generators:
     - list:
         elements:
-          - path: karmada-propagations
+          - path: karmada-propagation
   template:
     metadata:
       name: '{{path}}'
