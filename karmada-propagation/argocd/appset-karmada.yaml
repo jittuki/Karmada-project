@@ -1,6 +1,5 @@
 #appset-karmada.yaml
 apiVersion: argoproj.io/v1alpha1
-apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: karmada-propagation
@@ -9,8 +8,7 @@ spec:
   generators:
     - list:
         elements:
-          - path: deployment-workloads/propagation-policies
-          - path: deployment-workloads/workloads
+          - path: karmada-propagations
   template:
     metadata:
       name: '{{path}}'
