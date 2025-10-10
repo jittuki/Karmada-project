@@ -11,13 +11,15 @@ spec:
           - path: karmada-propagation
   template:
     metadata:
-      name: '{{path}}'
+      name: karmada-propagation
     spec:
       project: default
       source:
         repoURL: 'git@github.com:jittuki/Karmada-project.git'
         targetRevision: main
-        path: '{{path}}'
+        path: karmada-propagation
+        directory:
+          recurse: true
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: default
