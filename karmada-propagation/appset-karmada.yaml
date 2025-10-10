@@ -11,13 +11,13 @@ spec:
           - path: workloads
   template:
     metadata:
-      name: '{{path}}-app'
+      name: '{{path}}'
     spec:
       project: default
       source:
         repoURL: 'git@github.com:jittuki/Karmada-project.git'
         targetRevision: main
-        path: '{{path}}'
+        path: 'karmada-propagation/{{path}}'   # 여기서 repo 루트 기준 path를 지정
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: default
