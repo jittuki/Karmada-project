@@ -1,13 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: karmada-propagation
+  name: karmada-workloads
   namespace: argocd
 spec:
   generators:
     - list:
         elements:
-          - path: propagation-policies
           - path: workloads
   template:
     metadata:
@@ -19,7 +18,7 @@ spec:
         targetRevision: main
         path: '{{path}}'
       destination:
-        server: 'https://karmada-apiserver:5443'  # Karmada API 서버 주소
+        server: 'https://karmada-apiserver:5443'
         namespace: default
         kubeConfig:
           secretName: karmada-kubeconfig
@@ -27,3 +26,6 @@ spec:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - WaitForResources=true
