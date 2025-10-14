@@ -15,7 +15,9 @@ spec:
             order: 2
   template:
     metadata:
-      name: '{{path}}'
+      name: '{{name}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: '{{order}}'
     spec:
       project: default
       source:
@@ -23,11 +25,11 @@ spec:
         targetRevision: main
         path: '{{path}}'
       destination:
-        server: 'https://karmada-apiserver:5443'  # Karmada API 서버 주소
+        server: 'https://karmada-apiserver:5443'  # 이미 ArgoCD에 등록된 cluster
         namespace: default
-        kubeConfig:
-          secretName: karmada-kubeconfig
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
