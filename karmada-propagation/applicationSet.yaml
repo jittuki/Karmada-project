@@ -7,7 +7,7 @@ spec:
   generators:
     - list:
         elements:
-          - path: workloads
+          - path: karmada-propagation/workloads
   template:
     metadata:
       name: '{{path}}'
