@@ -15,5 +15,6 @@ spec:
       labelSelector:
         matchLabels:
           region: korea
+  conflictResolution: Abort
           
           
