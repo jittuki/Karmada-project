@@ -8,10 +8,10 @@ spec:
     - list:
         elements:
           - name: workloads
-            path: workloads
+            path: karmada-propagation/workloads
             order: 1
           - name: propagation-policies
-            path: propagation-policies
+            path: karmada-propagation/propagation-policies
             order: 2
   template:
     metadata:
@@ -25,11 +25,9 @@ spec:
         targetRevision: main
         path: '{{path}}'
       destination:
-        server: 'https://karmada-apiserver:5443'  # 이미 ArgoCD에 등록된 cluster
+        server: 'https://karmada-apiserver:5443'
         namespace: default
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
