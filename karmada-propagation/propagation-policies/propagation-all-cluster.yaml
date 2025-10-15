@@ -10,5 +10,8 @@ spec:
       kind: Deployment
       name: nginx
   placement:
-    clusterAffinity: {} 
+    clusterAffinity:
+      clusterNames:
+        - jisu-member-1
+        - jisu-member-2
     
