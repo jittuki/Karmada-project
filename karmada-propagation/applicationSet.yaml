@@ -23,7 +23,7 @@ spec:
         targetRevision: main
         path: 'karmada-propagation/{{path}}'
       destination:
-        server: 'https://kubernetes.default.svc'
+        server: 'https://192.168.40.122:32443'
         namespace: default
       syncPolicy:
         automated:
