@@ -7,17 +7,11 @@ spec:
   generators:
     - list:
         elements:
-          - name: workloads
-            path: karmada-propagation/workloads
-            order: 1
-          - name: propagation-policies
-            path: karmada-propagation/propagation-policies
-            order: 2
+          - path: propagation-policies
+          - path: workloads
   template:
     metadata:
-      name: '{{name}}'
-      annotations:
-        argocd.argoproj.io/sync-wave: '{{order}}'
+      name: '{{path}}'
     spec:
       project: default
       source:
@@ -25,8 +19,10 @@ spec:
         targetRevision: main
         path: '{{path}}'
       destination:
-        server: 'https://karmada-apiserver:5443'
+        server: 'https://karmada-apiserver:5443'  # Karmada API 서버 주소
         namespace: default
+        kubeConfig:
+          secretName: karmada-kubeconfig
       syncPolicy:
         automated:
           prune: true
