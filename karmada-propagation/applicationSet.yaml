@@ -9,8 +9,10 @@ spec:
         elements:
           - name: workloads
             path: workloads
+            syncPriority: 1
           - name: propagation-policies
             path: propagation-policies
+            syncPriority: 2
   template:
     metadata:
       name: '{{name}}'
@@ -27,3 +29,9 @@ spec:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      revisionHistoryLimit: 2
+      info:
+        - name: syncPriority
+          value: '{{syncPriority}}'
