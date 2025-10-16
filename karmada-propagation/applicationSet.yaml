@@ -9,10 +9,10 @@ spec:
         elements:
           - name: workloads
             path: workloads
-            syncPriority: 1
+            syncPriority: "1"
           - name: propagation-policies
             path: propagation-policies
-            syncPriority: 2
+            syncPriority: "2"
   template:
     metadata:
       name: '{{name}}'
@@ -23,7 +23,7 @@ spec:
         targetRevision: main
         path: 'karmada-propagation/{{path}}'
       destination:
-        server: 'https://192.168.40.122:32443'
+        server: 'https://192.168.40.122:32443'   # ? Karmada apiserver
         namespace: default
       syncPolicy:
         automated:
@@ -34,4 +34,4 @@ spec:
       revisionHistoryLimit: 2
       info:
         - name: syncPriority
-          value: '{{syncPriority}}'
+          value: '{{syncPriority}}'   # ? 불필요한 따옴표 제거 완료
