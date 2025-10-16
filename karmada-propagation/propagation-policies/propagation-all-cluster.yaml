@@ -16,3 +16,4 @@ spec:
       - jisu-member-2
   conflictResolution: Abort
   priority: 0
+  schedulerName: karmada-scheduler
