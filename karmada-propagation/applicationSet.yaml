@@ -19,11 +19,11 @@ spec:
     spec:
       project: default
       source:
-        repoURL: 'git@github.com:jittuki/Karmada-project.git'
+        repoURL: git@github.com:jittuki/Karmada-project.git
         targetRevision: main
-        path: 'karmada-propagation/{{path}}'
+        path: karmada-propagation/{{path}}
       destination:
-        server: 'https://192.168.40.122:32443'   # ? Karmada apiserver
+        server: https://192.168.40.122:32443  # ? Karmada apiserver
         namespace: default
       syncPolicy:
         automated:
@@ -32,6 +32,6 @@ spec:
         syncOptions:
           - CreateNamespace=true
       revisionHistoryLimit: 2
-      info:
-        - name: syncPriority
-          value: '{{syncPriority}}'   # ? 불필요한 따옴표 제거 완료
+    info:
+      - name: syncPriority
+        value: '{{syncPriority}}'
