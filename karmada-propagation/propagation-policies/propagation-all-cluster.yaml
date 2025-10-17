@@ -5,15 +5,15 @@ metadata:
   name: nginx-all-cluster
   namespace: default
 spec:
-  resourceSelectors:
-  - apiVersion: apps/v1
-    kind: Deployment
-    name: nginx
+  conflictResolution: Abort
   placement:
     clusterAffinity:
       clusterNames:
-      - jisu-member-1
-      - jisu-member-2
-  conflictResolution: Abort
-  priority: 0
+        - jisu-member-1
+        - jisu-member-2
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+      namespace: default
   schedulerName: karmada-scheduler
