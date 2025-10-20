@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karmada-scheduler-estimator-jisu-member-2
+  namespace: karmada-system
+  labels:
+    cluster: jisu-member-2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: karmada-scheduler-estimator-jisu-member-2
+  template:
+    metadata:
+      labels:
+        app: karmada-scheduler-estimator-jisu-member-2
+    spec:
+      automountServiceAccountToken: false
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+      containers:
+        - name: karmada-scheduler-estimator
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+          image: docker.io/karmada/karmada-scheduler-estimator:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: KUBE_CACHE_MUTATION_DETECTOR
+              value: "true"
+          command:
+            - /bin/karmada-scheduler-estimator
+            - --kubeconfig=/etc/jisu-member-2-kubeconfig
+            - --cluster-name=jisu-member-2
+            - --grpc-auth-cert-file=/etc/karmada/pki/server/tls.crt
+            - --grpc-auth-key-file=/etc/karmada/pki/server/tls.key
+            - --grpc-client-ca-file=/etc/karmada/pki/server/ca.crt
+            - --metrics-bind-address=$(POD_IP):8080
+            - --health-probe-bind-address=$(POD_IP):10351
+            - --logging-format=json
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10351
+              scheme: HTTP
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            timeoutSeconds: 5
+          ports:
+            - containerPort: 8080
+              name: metrics
+              protocol: TCP
+          volumeMounts:
+            - name: server-cert
+              mountPath: /etc/karmada/pki/server
+              readOnly: true
+            - name: member-kubeconfig
+              subPath: jisu-member-2-kubeconfig
+              mountPath: /etc/jisu-member-2-kubeconfig
+      volumes:
+        - name: server-cert
+          secret:
+            secretName: karmada-scheduler-estimator-cert
+        - name: member-kubeconfig
+          secret:
+            secretName: jisu-member-2-kubeconfig
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      priorityClassName: system-node-critical
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: karmada-scheduler-estimator-jisu-member-2
+  namespace: karmada-system
+  labels:
+    cluster: jisu-member-2
+spec:
+  selector:
+    app: karmada-scheduler-estimator-jisu-member-2
+  ports:
+    - protocol: TCP
+      port: 10352
+      targetPort: 10352
