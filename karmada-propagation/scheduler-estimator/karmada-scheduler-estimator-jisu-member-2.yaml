@@ -63,6 +63,9 @@ spec:
             - name: member-kubeconfig
               subPath: jisu-member-2-kubeconfig
               mountPath: /etc/jisu-member-2-kubeconfig
+            - name: scheduler-estimator-client-cert
+              mountPath: /etc/karmada/pki/scheduler-estimator-client  
+              readOnly: true
       volumes:
         - name: server-cert
           secret:
@@ -70,6 +73,9 @@ spec:
         - name: member-kubeconfig
           secret:
             secretName: jisu-member-2-kubeconfig
+        - name: scheduler-estimator-client-cert
+          secret:
+            secretName: karmada-scheduler-estimator-client-cert
       securityContext:
         seccompProfile:
           type: RuntimeDefault

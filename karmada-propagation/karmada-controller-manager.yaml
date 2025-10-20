@@ -9,7 +9,7 @@ metadata:
     karmada.io/bootstrapping: app-defaults
   name: karmada-controller-manager
   namespace: karmada-system
-  resourceVersion: "2040286"
+  resourceVersion: "2041971"
   uid: 61d80969-fedb-42c7-a35a-8a405f3b6fe6
 spec:
   progressDeadlineSeconds: 600
@@ -104,20 +104,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2025-10-16T10:02:48Z"
-    lastUpdateTime: "2025-10-16T10:02:48Z"
+  - lastTransitionTime: "2025-10-17T10:47:34Z"
+    lastUpdateTime: "2025-10-17T10:47:34Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2025-10-17T10:21:25Z"
-    lastUpdateTime: "2025-10-17T10:26:39Z"
-    message: ReplicaSet "karmada-controller-manager-756f74c8d5" is progressing.
-    reason: ReplicaSetUpdated
+  - lastTransitionTime: "2025-10-17T10:47:33Z"
+    lastUpdateTime: "2025-10-17T10:47:34Z"
+    message: ReplicaSet "karmada-controller-manager-756f74c8d5" has successfully progressed.
+    reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
   observedGeneration: 8
   readyReplicas: 1
-  replicas: 2
-  unavailableReplicas: 1
+  replicas: 1
   updatedReplicas: 1
