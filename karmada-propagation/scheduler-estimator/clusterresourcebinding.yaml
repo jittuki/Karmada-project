@@ -1,0 +1,14 @@
+apiVersion: work.karmada.io/v1alpha1
+kind: ClusterResourceBinding
+metadata:
+  name: nginx-binding
+  namespace: default
+spec:
+  resource:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx
+    namespace: default
+  clusters:
+  - name: jisu-member-1
+  - name: jisu-member-2
